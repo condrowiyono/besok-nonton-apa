@@ -111,7 +111,7 @@ export const Poster = (props: PosterProps) => {
         title={title}
         onMouseDown={handlePosterMouseDown}
         onClick={() => setOpen(true)}
-        className={`block rounded-lg shadow-lg duration-200 h-[180px] w-[120px] ease-in-out`}
+        className={`block rounded-lg shadow-lg duration-200 ease-in-out`}
         style={{
           opacity: buttonStage === "leave" ? 0 : 1,
           transform: buttonStage === "leave" ? "scale(2)" : "unset",
@@ -129,7 +129,7 @@ export const Poster = (props: PosterProps) => {
 
       <ReactPortal wrapperId="react-portal-modal-container">
         {shouldMount && (
-          <div className="modal open">
+          <div className={`modal open ${stage === "leave" ? "leaving" : ""} `}>
             <div
               className="overlay fixed inset-0 z-10 duration-200"
               style={{
