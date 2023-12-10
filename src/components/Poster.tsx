@@ -52,8 +52,8 @@ export const Poster = (props: PosterProps) => {
   const [open, setOpen] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("");
 
-  const { shouldMount, stage } = useTransition(open, 300);
-  const { stage: buttonStage } = useTransition(!open, 300);
+  const { shouldMount, stage } = useTransition(open, 200);
+  const { stage: buttonStage } = useTransition(!open, 200);
 
   const handlePosterMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { top, left } = e.currentTarget.getBoundingClientRect();
@@ -111,7 +111,7 @@ export const Poster = (props: PosterProps) => {
         title={title}
         onMouseDown={handlePosterMouseDown}
         onClick={() => setOpen(true)}
-        className={`block rounded-lg shadow-lg duration-300 h-[180px] w-[120px]`}
+        className={`block rounded-lg shadow-lg duration-200 h-[180px] w-[120px] ease-in-out`}
         style={{
           opacity: buttonStage === "leave" ? 0 : 1,
           transform: buttonStage === "leave" ? "scale(2)" : "unset",
@@ -131,9 +131,8 @@ export const Poster = (props: PosterProps) => {
         {shouldMount && (
           <div className="modal open">
             <div
-              className="overlay fixed inset-0 z-10 duration-300 transition-all"
+              className="overlay fixed inset-0 z-10 duration-200"
               style={{
-                opacity: stage === "enter" ? 1 : 0,
                 backgroundColor: stage === "enter" ? "rgba(0,0,0,.5)" : "unset",
                 backdropFilter: stage === "enter" ? "blur(8px)" : "unset",
               }}
@@ -143,7 +142,7 @@ export const Poster = (props: PosterProps) => {
               onClick={handleClickMask}
             >
               <div
-                className={`content mx-auto absolute inset-0 max-w-full h-fit rounded-lg shadow-lg z-10 overflow-hidden duration-300`}
+                className={`content mx-auto absolute inset-0 max-w-full h-fit rounded-lg shadow-lg z-10 overflow-hidden duration-200 ease-in-out focus:outline-none bg-[#181818]`}
                 ref={contentRef}
                 tabIndex={0}
                 style={{
@@ -154,9 +153,18 @@ export const Poster = (props: PosterProps) => {
                   transformOrigin,
                 }}
               >
+                <div className="absolute top-0 right-0 p-4 z-10">
+                  <button
+                    type="button"
+                    className="rounded-full bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-200"
+                    onClick={() => setOpen(false)}
+                  >
+                    &#x2715;
+                  </button>
+                </div>
                 <div
                   className="content-background absolute inset-0 z-[-1] bg-cover blur-3xl brightness-50 scale-150"
-                  style={{ background: `url(${poster}), #181818` }}
+                  style={{ background: `url(${poster})` }}
                 />
                 <div className="relative">
                   <Image
@@ -167,7 +175,7 @@ export const Poster = (props: PosterProps) => {
                     height={480}
                     style={{
                       WebkitMaskImage:
-                        "linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0) 100%)",
+                        "linear-gradient(180deg, rgba(0,0,0,1) 60%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0) 100%)",
                     }}
                   />
                   {/* <div
@@ -189,23 +197,21 @@ export const Poster = (props: PosterProps) => {
                     {title}
                   </h1>
                 </div>
-                <div
-                  className="p-4 grid gap-4"
-                  style={{
-                    gridTemplateColumns: "minmax(0,2fr) minmax(0,1fr)",
-                  }}
-                >
+                <div className="p-4 grid gap-4 grid-cols-1 md:grid-cols-[minmax(0,_2fr)_minmax(0,_1fr)]">
                   <div className="flex flex-col gap-4">
-                    <div className="grid gap-4 grid-cols-2">
+                    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                       <a
                         href={watchNowOffer?.standardWebURL}
                         target="_blank"
-                        className="rounded-lg bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-300 text-center"
+                        className={`rounded-lg bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-200 text-center ${
+                          !watchNowOffer && "opacity-50 cursor-not-allowed"
+                        }`}
+                        aria-disabled={!watchNowOffer}
                       >
                         Putar di {watchNowOffer?.package.clearName}
                       </a>
                       <button
-                        className="rounded-lg bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-300"
+                        className="rounded-lg bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-200"
                         onClick={() =>
                           navigator.share({
                             title: title,
@@ -258,8 +264,8 @@ export const Poster = (props: PosterProps) => {
                   </div>
                 </div>
                 <div className="p-4">
-                  <div className="font-bold text-xl">Putar di</div>
-                  <div className="grid gap-4 grid-cols-4">
+                  <div className="font-bold text-xl">Tersedia di</div>
+                  <div className="grid gap-4 grid-cols-1 md:grid-cols-4">
                     {offersMap.size > 0 ? (
                       <>
                         {Array.from(offersMap.keys()).map((key) => (
@@ -267,7 +273,7 @@ export const Poster = (props: PosterProps) => {
                             href={offersMap.get(key)}
                             key={key}
                             target="_blank"
-                            className="rounded-lg bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-300"
+                            className="rounded-lg bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-200"
                           >
                             {key}
                           </a>

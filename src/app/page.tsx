@@ -13,7 +13,7 @@ export default async function Home({
   const suggestedTitles = await querySuggestedTitles(query);
 
   return (
-    <main className="mx-auto max-w-screen-lg">
+    <main className="mx-auto max-w-screen-lg p-4">
       <div>
         <h1 className="text-2xl font-bold text-white">Besok Nonton Apa?</h1>
         <p className="text-white">Cari film yang mau kamu tonton besok</p>
@@ -23,7 +23,7 @@ export default async function Home({
         style={{
           display: "grid",
           gap: 16,
-          gridTemplateColumns: "repeat(auto-fit, 120px)",
+          gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
         }}
       >
         {suggestedTitles.data.data.popularTitles.edges.map((item) => (

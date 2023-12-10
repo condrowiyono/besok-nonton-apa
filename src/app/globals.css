@@ -6,8 +6,9 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  font-size: 14px;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -21,9 +22,8 @@ html:has(.modal.open) {
   overflow: hidden;
 }
 
-@media (prefers-color-scheme: light) {
+@media screen and (min-width: 640px) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    font-size: 16px;
   }
 }

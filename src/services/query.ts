@@ -26,7 +26,7 @@ fragment SuggestedTitle on MovieOrShow {
     shortDescription
     ageCertification
     runtime
-    fullPosterUrl: posterUrl(profile: S718, format: WEBP)
+    fullPosterUrl: posterUrl(profile: S332, format: WEBP)
     genres {
       shortName
     }
@@ -37,7 +37,7 @@ fragment SuggestedTitle on MovieOrShow {
       imdbScore,
       imdbVotes
     }
-    fullBackdrops: backdrops(profile: S1920, format: WEBP) {
+    fullBackdrops: backdrops(profile: S640, format: WEBP) {
       backdropUrl
     }
   }
