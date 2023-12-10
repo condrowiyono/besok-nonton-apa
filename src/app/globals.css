@@ -28,7 +28,7 @@ body:has(.modal.open) > #root {
 }
 
 #root, body:has(.modal.leaving) > #root {
-  transition: transform 0.s ease-in-out;
+  transition: transform 0.2s ease-in-out;
   transform: unset;
 }
 
