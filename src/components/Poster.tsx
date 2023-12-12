@@ -53,7 +53,7 @@ export const Poster = (props: PosterProps) => {
   const [open, setOpen] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("");
 
-  const { shouldMount, stage } = useTransition(open, 200);
+  const { shouldMount, stage } = useTransition(open, 300);
 
   const handlePosterMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { top, left } = e.currentTarget.getBoundingClientRect();
@@ -133,13 +133,13 @@ export const Poster = (props: PosterProps) => {
               leaving: stage === "leave",
             })}
           >
-            <div className="overlay fixed inset-0 z-10 duration-200" />
+            <div className="overlay fixed inset-0 z-10" />
             <div
               className="fixed inset-0 z-10 overflow-y-auto"
               onClick={handleClickMask}
             >
               <div
-                className={`content mx-auto absolute inset-0 max-w-full h-fit rounded-lg shadow-lg z-10 overflow-hidden duration-200 ease-in-out focus:outline-none bg-[#181818]`}
+                className={`content mx-auto absolute inset-0 max-w-full h-fit rounded-lg shadow-lg z-10 overflow-hidden focus:outline-none bg-[#181818]`}
                 ref={contentRef}
                 tabIndex={0}
                 style={{ transformOrigin }}
