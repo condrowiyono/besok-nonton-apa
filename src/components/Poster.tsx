@@ -53,7 +53,7 @@ export const Poster = (props: PosterProps) => {
   const [open, setOpen] = useState(false);
   const [transformOrigin, setTransformOrigin] = useState("");
 
-  const { shouldMount, stage } = useTransition(open, 300);
+  const { shouldMount, stage } = useTransition(open, 250);
 
   const handlePosterMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { top, left } = e.currentTarget.getBoundingClientRect();
@@ -111,9 +111,7 @@ export const Poster = (props: PosterProps) => {
         title={title}
         onMouseDown={handlePosterMouseDown}
         onClick={() => setOpen(true)}
-        className={clsx("modal trigger block rounded-lg shadow-lg", {
-          entered: stage === "enter",
-        })}
+        className={clsx("modal trigger block rounded-lg shadow-lg", stage)}
         style={{ transformOrigin }}
       >
         <Image
@@ -127,12 +125,7 @@ export const Poster = (props: PosterProps) => {
 
       <ReactPortal wrapperId="react-portal-modal-container">
         {shouldMount && (
-          <div
-            className={clsx("modal open", {
-              entering: stage === "from",
-              leaving: stage === "leave",
-            })}
-          >
+          <div className={clsx("modal open", stage)}>
             <div className="overlay fixed inset-0 z-10" />
             <div
               className="fixed inset-0 z-10 overflow-y-auto"
@@ -144,6 +137,10 @@ export const Poster = (props: PosterProps) => {
                 tabIndex={0}
                 style={{ transformOrigin }}
               >
+                <div
+                  className="content-background absolute inset-0 z-[-1] bg-cover blur-3xl brightness-50"
+                  style={{ backgroundImage: `url(${poster})` }}
+                />
                 <div className="absolute top-0 right-0 p-4 z-10">
                   <button
                     type="button"
@@ -153,10 +150,6 @@ export const Poster = (props: PosterProps) => {
                     &#x2715;
                   </button>
                 </div>
-                <div
-                  className="content-background absolute inset-0 z-[-1] bg-cover blur-3xl brightness-50 scale-150"
-                  style={{ background: `url(${poster})` }}
-                />
                 <div className="relative">
                   <Image
                     className="backdrop h-[480px] object-cover rounded-t-lg"
