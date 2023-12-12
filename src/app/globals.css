@@ -27,13 +27,94 @@ body:has(.modal.open) > #root {
   transform: scale(0.9);
 }
 
-#root, body:has(.modal.leaving) > #root {
+#root, body:has(.modal.open.leaving) > #root {
   transition: transform 0.2s ease-in-out;
   transform: unset;
 }
 
+.modal.trigger {
+  opacity: 1;
+  transform: unset;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.modal.trigger.entered {
+  opacity: 0;
+  transform: scale(2);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.modal.open>.overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+  animation: fade-in 0.2s ease-in-out;
+}
+
+.modal.open.entering>.overlay {
+  animation: fade-in 0.2s ease-in-out;
+}
+
+.modal.open.leaving>.overlay {
+  animation: fade-in 0.2s ease-in-out;
+  animation-direction: reverse;
+}
+
+.modal.open .content .video-wrapper {
+  width: 850px;
+  height: 478px;
+}
+
+.modal.open .content {  
+  top: 40px;
+  width: 850px;
+  animation: scale 0.2s ease-in-out;
+}
+
+.modal.open.entering .content {
+  animation: scale 0.2s ease-in-out;
+}
+
+.modal.open.leaving .content {
+  animation: scale-down 0.2s ease-in-out;
+}
+
+/* .modal.open .backdrop {
+  -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 60%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(180deg, rgba(0,0,0,1) 60%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0) 100%);
+} */
+
 @media screen and (min-width: 640px) {
   :root {
     font-size: 16px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-down {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
   }
 }

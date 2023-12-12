@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
 import ReactPortal from "./Portal";
 import { useTransition } from "../hooks/useTransition";
 import Image from "next/image";
@@ -53,7 +54,6 @@ export const Poster = (props: PosterProps) => {
   const [transformOrigin, setTransformOrigin] = useState("");
 
   const { shouldMount, stage } = useTransition(open, 200);
-  const { stage: buttonStage } = useTransition(!open, 200);
 
   const handlePosterMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { top, left } = e.currentTarget.getBoundingClientRect();
@@ -111,12 +111,10 @@ export const Poster = (props: PosterProps) => {
         title={title}
         onMouseDown={handlePosterMouseDown}
         onClick={() => setOpen(true)}
-        className={`block rounded-lg shadow-lg duration-200 ease-in-out`}
-        style={{
-          opacity: buttonStage === "leave" ? 0 : 1,
-          transform: buttonStage === "leave" ? "scale(2)" : "unset",
-          transformOrigin,
-        }}
+        className={clsx("modal trigger block rounded-lg shadow-lg", {
+          entered: stage === "enter",
+        })}
+        style={{ transformOrigin }}
       >
         <Image
           alt={`poster-${title}`}
@@ -129,14 +127,13 @@ export const Poster = (props: PosterProps) => {
 
       <ReactPortal wrapperId="react-portal-modal-container">
         {shouldMount && (
-          <div className={`modal open ${stage === "leave" ? "leaving" : ""} `}>
-            <div
-              className="overlay fixed inset-0 z-10 duration-200"
-              style={{
-                backgroundColor: stage === "enter" ? "rgba(0,0,0,.5)" : "unset",
-                backdropFilter: stage === "enter" ? "blur(8px)" : "unset",
-              }}
-            />
+          <div
+            className={clsx("modal open", {
+              entering: stage === "from",
+              leaving: stage === "leave",
+            })}
+          >
+            <div className="overlay fixed inset-0 z-10 duration-200" />
             <div
               className="fixed inset-0 z-10 overflow-y-auto"
               onClick={handleClickMask}
@@ -145,13 +142,7 @@ export const Poster = (props: PosterProps) => {
                 className={`content mx-auto absolute inset-0 max-w-full h-fit rounded-lg shadow-lg z-10 overflow-hidden duration-200 ease-in-out focus:outline-none bg-[#181818]`}
                 ref={contentRef}
                 tabIndex={0}
-                style={{
-                  width: PREVIEW_WIDTH,
-                  top: PREVIEW_TOP,
-                  opacity: stage === "enter" ? 1 : 0,
-                  transform: stage === "enter" ? "unset" : "scale(.5)",
-                  transformOrigin,
-                }}
+                style={{ transformOrigin }}
               >
                 <div className="absolute top-0 right-0 p-4 z-10">
                   <button
@@ -168,20 +159,13 @@ export const Poster = (props: PosterProps) => {
                 />
                 <div className="relative">
                   <Image
-                    className="h-[480px] object-cover rounded-t-lg"
+                    className="backdrop h-[480px] object-cover rounded-t-lg"
                     alt={`backdrop-${title}`}
                     src={backdrop || poster}
                     width={PREVIEW_WIDTH}
                     height={480}
-                    style={{
-                      WebkitMaskImage:
-                        "linear-gradient(180deg, rgba(0,0,0,1) 60%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0) 100%)",
-                    }}
                   />
-                  {/* <div
-                    className="video-wrapper"
-                    style={{ width: PREVIEW_WIDTH, height: 480 }}
-                  >
+                  {/* <div className="video-wrapper">
                     <iframe
                       className="video"
                       width={PREVIEW_WIDTH}
