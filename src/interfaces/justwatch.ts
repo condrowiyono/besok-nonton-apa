@@ -39,7 +39,7 @@ export interface Content {
 }
 
 export interface Genre {
-  shortName: string;
+  translation: string;
 }
 
 export interface Credit {

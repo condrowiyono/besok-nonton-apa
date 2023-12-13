@@ -28,8 +28,11 @@ fragment SuggestedTitle on MovieOrShow {
     ageCertification
     runtime
     fullPosterUrl: posterUrl(profile: S332, format: WEBP)
+    fullBackdrops: backdrops(profile: S640, format: WEBP) {
+      backdropUrl
+    }
     genres {
-      shortName
+      translation(language: $language)
     }
     credits {
       name
@@ -37,9 +40,6 @@ fragment SuggestedTitle on MovieOrShow {
     scoring {
       imdbScore,
       imdbVotes
-    }
-    fullBackdrops: backdrops(profile: S640, format: WEBP) {
-      backdropUrl
     }
   }
   watchNowOffer(country: $country, platform: WEB) {
@@ -58,7 +58,7 @@ fragment SuggestedTitle on MovieOrShow {
   __typename
 }`;
 
-export function querySuggestedTitles(searchQuery: string) {
+export function querySuggestedTitles(searchQuery?: string) {
   return axios.request<QueryResponse>({
     method: "POST",
     url: JUSTWATCH_GRAPHQL,
@@ -68,7 +68,7 @@ export function querySuggestedTitles(searchQuery: string) {
       variables: {
         country: "ID",
         language: "en",
-        first: 10,
+        first: 16,
         filter: {
           searchQuery,
         },

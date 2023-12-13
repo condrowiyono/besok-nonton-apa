@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import ReactPortal from "./Portal";
-import { useTransition } from "../hooks/useTransition";
 import Image from "next/image";
 import { Offer, WatchNowOffer } from "@/interfaces/justwatch";
 import { formatDuration, formatNumber } from "@/utils/format";
+import { useTransition } from "@/hooks/useTransition";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { useKeydown } from "@/hooks/useKeydown";
 
 const PREVIEW_WIDTH = 850;
 const PREVIEW_TOP = 40;
@@ -51,9 +54,18 @@ export const Poster = (props: PosterProps) => {
 
   const contentRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  const [transformOrigin, setTransformOrigin] = useState("");
+  const [transformOrigin, setTransformOrigin] = useState("bottom center");
 
   const { shouldMount, stage } = useTransition(open, 250);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+  const p = searchParams.get("p");
+
+  useEffect(() => {
+    setOpen(p === title);
+  }, [p, title]);
 
   const handlePosterMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { top, left } = e.currentTarget.getBoundingClientRect();
@@ -64,45 +76,30 @@ export const Poster = (props: PosterProps) => {
     setTransformOrigin(`${x}px ${y}px`);
   };
 
-  const handleClickMask = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.target === e.currentTarget && setOpen(false);
+  const handleOpen = () => {
+    setOpen(true);
+
+    const newSearch = new URLSearchParams();
+    if (query) newSearch.set("q", query);
+    newSearch.set("p", title);
+
+    router.replace(`${pathname}?${newSearch.toString()}`);
   };
 
-  useEffect(() => {
-    const modalElement = contentRef.current;
+  const handleClose = () => {
+    setOpen(false);
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Tab") {
-        const focusable = modalElement?.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        ) satisfies NodeListOf<HTMLElement> | undefined;
+    const newSearch = new URLSearchParams();
+    if (query) newSearch.set("q", query);
+    router.replace(`${pathname}?${newSearch.toString()}`);
+  };
 
-        const firstEl = focusable?.[0];
-        const lastEl = focusable?.[focusable.length - 1];
+  const handleClickMask = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.target === e.currentTarget && handleClose();
+  };
 
-        if (event.shiftKey && document.activeElement === firstEl) {
-          lastEl?.focus();
-          event.preventDefault();
-        } else if (!event.shiftKey && document.activeElement === lastEl) {
-          firstEl?.focus();
-          event.preventDefault();
-        }
-      } else if (event.key === "Escape") {
-        setOpen(false);
-      }
-    };
-
-    if (modalElement && shouldMount) {
-      modalElement.focus();
-      modalElement.addEventListener("keydown", handleKeyDown);
-    }
-
-    return () => {
-      if (modalElement) {
-        modalElement.removeEventListener("keydown", handleKeyDown);
-      }
-    };
-  }, [shouldMount]);
+  useFocusTrap(contentRef, shouldMount);
+  useKeydown("Escape", contentRef, handleClose);
 
   return (
     <>
@@ -110,7 +107,7 @@ export const Poster = (props: PosterProps) => {
         type="button"
         title={title}
         onMouseDown={handlePosterMouseDown}
-        onClick={() => setOpen(true)}
+        onClick={handleOpen}
         className={clsx("modal trigger block rounded-lg shadow-lg", stage)}
         style={{ transformOrigin }}
       >
@@ -119,7 +116,10 @@ export const Poster = (props: PosterProps) => {
           width={CARD_WIDTH}
           height={CARD_HEIGHT}
           src={poster}
+          placeholder="data:image/png;base64,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"
           className="rounded-lg object-cover h-full w-full"
+          draggable={false}
+          loading="lazy"
         />
       </button>
 
@@ -145,7 +145,7 @@ export const Poster = (props: PosterProps) => {
                   <button
                     type="button"
                     className="rounded-full bg-white text-black font-bold px-4 py-2 hover:bg-gray-200 duration-200"
-                    onClick={() => setOpen(false)}
+                    onClick={handleClose}
                   >
                     &#x2715;
                   </button>
@@ -157,6 +157,7 @@ export const Poster = (props: PosterProps) => {
                     src={backdrop || poster}
                     width={PREVIEW_WIDTH}
                     height={480}
+                    draggable={false}
                   />
                   {/* <div className="video-wrapper">
                     <iframe
