@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import * as cheerio from "cheerio";
+import dayjs from "dayjs";
 import { NextRequest } from "next/server";
 
 export async function GET(
@@ -7,8 +8,9 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   const { slug } = params;
-
-  const city_id = req.nextUrl.searchParams.get("city_id") ?? "3";
+  const { nextUrl } = req;
+  const city_id = nextUrl.searchParams.get("city_id") ?? "3";
+  const date = nextUrl.searchParams.get("date");
 
   const baseUrl = `https://21cineplex.com/${slug}`;
   const { headers, data } = await axios.get(baseUrl);
@@ -24,6 +26,14 @@ export async function GET(
   const movieCodeDB = script.match(movieCodeDBReg)?.[1];
   const movieId = script.match(movieIdReg)?.[1];
 
+  const searchDate = new URLSearchParams();
+  searchDate.append("data", "getMovieTheaterList");
+  searchDate.append("city_id", city_id);
+  searchDate.append("movieCodeDB", movieCodeDB ?? "");
+  searchDate.append("movieId", movieId ?? "");
+  searchDate.append("token", token ?? "");
+  date && searchDate.append("showdate", date ?? "");
+
   const config: AxiosRequestConfig = {
     method: "post",
     maxBodyLength: Infinity,
@@ -32,7 +42,7 @@ export async function GET(
       "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       cookie,
     },
-    data: `data=getMovieTheaterList&city_id=${city_id}&movieCodeDB=${movieCodeDB}&movieId=${movieId}&token=${token}`,
+    data: searchDate.toString(),
   };
 
   const response = await axios.request<{ msg: string }>(config);
