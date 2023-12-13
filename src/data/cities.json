@@ -1,0 +1,280 @@
+{
+  "cities": [
+    {
+      "id": 77,
+      "city": "Ambon"
+    },
+    {
+      "id": 79,
+      "city": "Balikpapan"
+    },
+    {
+      "id": 12,
+      "city": "Bandung"
+    },
+    {
+      "id": 76,
+      "city": "Banjarmasin"
+    },
+    {
+      "id": 27,
+      "city": "Batam"
+    },
+    {
+      "id": 36,
+      "city": "Bekasi"
+    },
+    {
+      "id": 81,
+      "city": "Bengkulu"
+    },
+    {
+      "id": 0,
+      "city": "Blitar"
+    },
+    {
+      "id": 26,
+      "city": "Bogor"
+    },
+    {
+      "id": 116,
+      "city": "Bondowoso"
+    },
+    {
+      "id": 113,
+      "city": "Bontang"
+    },
+    {
+      "id": 112,
+      "city": "Cianjur"
+    },
+    {
+      "id": 104,
+      "city": "Cikarang"
+    },
+    {
+      "id": 59,
+      "city": "Cilegon"
+    },
+    {
+      "id": 61,
+      "city": "Cirebon"
+    },
+    {
+      "id": 56,
+      "city": "Denpasar"
+    },
+    {
+      "id": 110,
+      "city": "Depok,"
+    },
+    {
+      "id": 106,
+      "city": "Dumai"
+    },
+    {
+      "id": 97,
+      "city": "Garut"
+    },
+    {
+      "id": 85,
+      "city": "Gorontalo"
+    },
+    {
+      "id": 100,
+      "city": "Gresik"
+    },
+    {
+      "id": 3,
+      "city": "Jakarta"
+    },
+    {
+      "id": 47,
+      "city": "Jambi"
+    },
+    {
+      "id": 84,
+      "city": "Jayapura"
+    },
+    {
+      "id": 102,
+      "city": "Jember"
+    },
+    {
+      "id": 91,
+      "city": "Karawang"
+    },
+    {
+      "id": 103,
+      "city": "Kediri"
+    },
+    {
+      "id": 114,
+      "city": "Kendari"
+    },
+    {
+      "id": 98,
+      "city": "Kisaran"
+    },
+    {
+      "id": 115,
+      "city": "Kuala Kapuas"
+    },
+    {
+      "id": 94,
+      "city": "Kupang"
+    },
+    {
+      "id": 48,
+      "city": "Lampung"
+    },
+    {
+      "id": 0,
+      "city": "Madiun"
+    },
+    {
+      "id": 54,
+      "city": "Makassar"
+    },
+    {
+      "id": 23,
+      "city": "Malang"
+    },
+    {
+      "id": 62,
+      "city": "Manado"
+    },
+    {
+      "id": 108,
+      "city": "Manokwari"
+    },
+    {
+      "id": 89,
+      "city": "Mataram"
+    },
+    {
+      "id": 25,
+      "city": "Medan"
+    },
+    {
+      "id": 0,
+      "city": "Mojokerto"
+    },
+    {
+      "id": 90,
+      "city": "Padang"
+    },
+    {
+      "id": 80,
+      "city": "Palangkaraya"
+    },
+    {
+      "id": 50,
+      "city": "Palembang"
+    },
+    {
+      "id": 86,
+      "city": "Palu"
+    },
+    {
+      "id": 105,
+      "city": "Pangkal Pinang"
+    },
+    {
+      "id": 99,
+      "city": "Pekalongan"
+    },
+    {
+      "id": 73,
+      "city": "Pekanbaru"
+    },
+    {
+      "id": 69,
+      "city": "Pontianak"
+    },
+    {
+      "id": 0,
+      "city": "Probolinggo"
+    },
+    {
+      "id": 0,
+      "city": "Purwakarta"
+    },
+    {
+      "id": 0,
+      "city": "Purwokerto"
+    },
+    {
+      "id": 101,
+      "city": "Rantau Prapat"
+    },
+    {
+      "id": 109,
+      "city": "Rokan Hilir"
+    },
+    {
+      "id": 52,
+      "city": "Samarinda"
+    },
+    {
+      "id": 20,
+      "city": "Semarang"
+    },
+    {
+      "id": 0,
+      "city": "Serang"
+    },
+    {
+      "id": 95,
+      "city": "Sidoarjo"
+    },
+    {
+      "id": 87,
+      "city": "Singkawang"
+    },
+    {
+      "id": 70,
+      "city": "Solo"
+    },
+    {
+      "id": 107,
+      "city": "Sorong"
+    },
+    {
+      "id": 93,
+      "city": "Sumedang"
+    },
+    {
+      "id": 55,
+      "city": "Surabaya"
+    },
+    {
+      "id": 35,
+      "city": "Tangerang"
+    },
+    {
+      "id": 92,
+      "city": "Tanjung Pinang"
+    },
+    {
+      "id": 111,
+      "city": "Tarakan"
+    },
+    {
+      "id": 82,
+      "city": "Tasikmalaya"
+    },
+    {
+      "id": 0,
+      "city": "Tegal"
+    },
+    {
+      "id": 96,
+      "city": "Ternate"
+    },
+    {
+      "id": 75,
+      "city": "Yogyakarta"
+    }
+  ]
+}

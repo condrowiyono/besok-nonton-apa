@@ -29,7 +29,7 @@ export default async function Home({
         {suggestedTitles.data.data.popularTitles.edges.map((item) => (
           <Poster
             key={item.node.id}
-            title={item.node.content.title}
+            title={item.node.content.originalTitle}
             synopsis={item.node.content.shortDescription}
             runtime={item.node.content.runtime}
             genres={item.node.content.genres.map((genre) => genre.shortName)}
@@ -37,7 +37,11 @@ export default async function Home({
             originalReleaseYear={item.node.content.originalReleaseYear}
             imdbScore={item.node.content.scoring.imdbScore}
             imdbVotes={item.node.content.scoring.imdbVotes}
-            poster={`https://images.justwatch.com${item.node.content.fullPosterUrl}`}
+            poster={
+              item.node.content.fullPosterUrl
+                ? `https://images.justwatch.com${item.node.content.fullPosterUrl}`
+                : ``
+            }
             backdrop={
               item.node.content.fullBackdrops?.[0]?.backdropUrl
                 ? `https://images.justwatch.com${item.node.content.fullBackdrops?.[0]?.backdropUrl}`

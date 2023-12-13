@@ -22,6 +22,7 @@ fragment SuggestedTitle on MovieOrShow {
   content(country: $country, language: $language) {
     fullPath
     title
+    originalTitle
     originalReleaseYear
     shortDescription
     ageCertification

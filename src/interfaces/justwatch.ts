@@ -26,6 +26,7 @@ export interface Node {
 export interface Content {
   fullPath: string;
   title: string;
+  originalTitle: string;
   ageCertification: string;
   genres: Genre[];
   credits: Credit[];
