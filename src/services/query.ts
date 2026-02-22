@@ -68,7 +68,7 @@ export function querySuggestedTitles(searchQuery?: string) {
       variables: {
         country: "ID",
         language: "en",
-        first: 16,
+        first: 50,
         filter: {
           searchQuery,
         },
